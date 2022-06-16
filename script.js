@@ -5,6 +5,14 @@ const imageBaseUrl = 'https://image.tmdb.org/t/p'
 // Example image tag
 // <img class="movie-poster" src="${imageBaseUrl}/w342${movie.posterPath}" alt="${movie.title}" title="${movie.title}"/>
 
+
+const main_page = document.querySelector("#flixter_movie_main_page")
+const img_selector = document.querySelector(".movie-poster")
+var flix_individual_movie = document.getElementsByClassName(".flixter_movie_card");
+const main_body = document.getElementById("entire_page")
+const toggle_display_movie_details = document.getElementById("no_display_mid_screen")
+const movie_display_detail = document.getElementById("movie_details")
+
 const movies = [
     {
         id: 338953,
@@ -110,16 +118,12 @@ const movies = [
     }
 ];
 
-const main_page = document.querySelector("#flixter_movie_main_page")
-const img_selector = document.querySelector(".movie-poster")
-
-
 function addComponent(Main_Page, movie_details) {
     Main_Page.innerHTML +=
         `
     <div class="flixter_movie_card">
         <div class="movie_pic">
-        <img class="movie-poster" src="${imageBaseUrl}/w342${movie_details.posterPath}" alt="${movie_details.title}" title="${movie_details.title}"/>
+        <img class="movie-poster" src="${imageBaseUrl}/w342${movie_details.posterPath}" alt="${movie_details.title}" title="${movie_details.title}" id="${movie_details.id}"/>
 
 
         </div>
@@ -134,10 +138,73 @@ function addComponent(Main_Page, movie_details) {
      `
 }
 
+main_body.addEventListener('click', function (e) {
+    // But only alert for elements that have an alert-button class
+    if (e.target.classList.contains("movie-poster")) {
+        console.log(e.target.id)
+        displayIndividualMovieDetails(e.target.id)
+    }
+});
+
+
+// flix_individual_movie.addEventListener("click", function() {
+
+// })
+
+document.getElementById("no_display_mid_screen_btn").addEventListener('click', (event) => {
+    toggle_display_movie_details.style.display = "none"
+})
+
+
+/*
+Update later
+*/
+// toggle_display_movie_details.addEventListener('click', (event) => {
+
+
+
+// });
+
+function updateDisplayMovieDetail(movie_details){
+    console.log(movie_details)
+    movie_display_detail.innerHTML = `
+        
+        <img class="individual_movie_poster" src="https://i0.wp.com/tivertonlibrary.org/wp-content/uploads/2019/02/intergalactic-blog.png?fit=650%2C400&ssl=1" alt="${movie_details.title}" title="${movie_details.title}" id="${movie_details.id}"/>
+        
+            <div>
+                <h4>Nomaland</h4>
+                <p>
+                    Hi
+                </p>
+                <p>
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore
+                    et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
+                    aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+                    cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
+                    culpa qui officia deserunt mollit anim id est laborum.
+                </p>
+
+            </div>
+        
+        
+        
+        
+      `
+}
+
+function displayIndividualMovieDetails(movie_id) {
+    console.log(movie_id)
+    toggle_display_movie_details.style.display = "block"
+    /*data.find(el => el.code === "AL");*/
+    let movie_detail = movies.find(movie => movie.id == movie_id);
+    updateDisplayMovieDetail(movie_detail)
+}
 
 window.onload = () => {
     movies.forEach((movie) => {
         addComponent(main_page, movie)
     })
     console.log("Loaded")
+
+
 }
