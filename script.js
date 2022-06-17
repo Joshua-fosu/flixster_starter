@@ -18,7 +18,12 @@ const toggle_display_movie_details = document.getElementById("no_display_mid_scr
 const movie_display_detail = document.getElementById("movie_details")
 const search_bar = document.getElementById("query")
 const form_selector = document.getElementById("form")
+const load_more_selector = ""
 var endless_scrolling  = true
+
+
+
+
 
 
 
@@ -50,6 +55,16 @@ function addComponent(Main_Page, movie_details) {
     </div>
     
      `
+}
+
+function addLoadMoreButton(){
+    main_page.innerHTML += `
+    <button id="load_more" onclick='load_more_movies();'>
+        Load More
+    </button>
+    
+    `
+    
 }
 
 function addQueryComponent(Main_page, movie_details){
@@ -145,10 +160,10 @@ async function getTrendingMovies(){
     const response = await fetch("https://api.themoviedb.org/3/movie/popular?api_key=e31d3ef41e690c0589dc357561e14fe0&language=en-US&page=" + currpage)
     const response_json = await response.json()
     const movies = response_json.results
-    currpage += 1
     movies.forEach((movie) => {
         addComponent(main_page, movie)
     })
+    addLoadMoreButton()
 
 }
 
@@ -172,13 +187,24 @@ async function runOngoingSearch() {
 }
 
 
-window.onscroll = function (ev) {
-    if ( ( (window.innerHeight + window.scrollY) >= (document.body.offsetHeight) )  && (endless_scrolling)) {
-        currpage += 1
-        getTrendingMovies()
-    }
-};
+// window.onscroll = function (ev) {
+//     if ( ( (window.innerHeight + window.scrollY) >= (document.body.offsetHeight) )  && (endless_scrolling)) {
+//         currpage += 1
+//         getTrendingMovies()
+//     }
+// };
 
+
+// load_more_selector.addEventListener('click', (event) => {
+//     currpage += 1
+//     getTrendingMovies()
+// })
+
+function load_more_movies() {
+    console.log("came, here")
+    currpage += 1
+    getTrendingMovies()
+}
 
 search_bar.addEventListener('input', (event)=> {
     currQuery = search_bar.value
@@ -186,7 +212,6 @@ search_bar.addEventListener('input', (event)=> {
         main_page.innerHTML = ``
         currpage = 1
         getTrendingMovies()
-        endless_scrolling = true
     }else{
         
     runOngoingSearch()
