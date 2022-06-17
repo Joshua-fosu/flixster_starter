@@ -10,7 +10,7 @@ let currpage = 1
 // <img class="movie-poster" src="${imageBaseUrl}/w342${movie.posterPath}" alt="${movie.title}" title="${movie.title}"/>
 
 
-const main_page = document.querySelector("#flixter_movie_main_page")
+const main_page = document.querySelector("#movies-grid")
 const img_selector = document.querySelector(".movie-poster")
 var flix_individual_movie = document.getElementsByClassName(".movie-card");
 const main_body = document.getElementById("entire_page")

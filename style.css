@@ -22,7 +22,7 @@ nav{
     height: 50px;
 }
 
-#flixter_movie_main_page {
+#movies-grid {
     position: relative;
     height: fit-content;
     display: flex;
