@@ -59,12 +59,12 @@ function addComponent(Main_Page, movie_details) {
 
 function addLoadMoreButton(){
     main_page.innerHTML += `
-    <button id="load_more" onclick='load_more_movies();'>
+    <button id="load-more-movies-btn" onclick='load_more_movies();'>
         Load More
     </button>
     
     `
-    
+
 }
 
 function addQueryComponent(Main_page, movie_details){
