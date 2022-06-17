@@ -12,11 +12,11 @@ let currpage = 1
 
 const main_page = document.querySelector("#flixter_movie_main_page")
 const img_selector = document.querySelector(".movie-poster")
-var flix_individual_movie = document.getElementsByClassName(".flixter_movie_card");
+var flix_individual_movie = document.getElementsByClassName(".movie-card");
 const main_body = document.getElementById("entire_page")
 const toggle_display_movie_details = document.getElementById("no_display_mid_screen")
 const movie_display_detail = document.getElementById("movie_details")
-const search_bar = document.getElementById("query")
+const search_bar = document.getElementById("search-input")
 const form_selector = document.getElementById("form")
 const load_more_selector = ""
 var endless_scrolling  = true
@@ -39,7 +39,7 @@ function addComponent(Main_Page, movie_details) {
     image_path = movie_details.poster_path?movie_details.poster_path: movie_details.backdrop_path
     Main_Page.innerHTML +=
         `
-    <div class="flixter_movie_card">
+    <div class="movie-card">
         <div class="movie_pic">
 
         <img class="movie-poster" src="${imageBaseUrl}/original/${image_path}" alt="${movie_details.title}" title="${movie_details.title}" id="${movie_details.id}"/>
@@ -47,8 +47,8 @@ function addComponent(Main_Page, movie_details) {
 
         </div>
         <div class="rating_name">
-            <p><i class="fa-solid fa-star"></i>${movie_details.vote_average}</p>
-            <p>${movie_details.title}</p>
+            <p id="movie-votes"><i class="fa-solid fa-star"></i>${movie_details.vote_average}</p>
+            <p id="movie-title">${movie_details.title}</p>
 
         </div>
 
@@ -71,7 +71,7 @@ function addQueryComponent(Main_page, movie_details){
     image_path = movie_details.poster_path?movie_details.poster_path: movie_details.backdrop_path
     Main_page.innerHTML =
         `
-    <div class="flixter_movie_card">
+    <div class="movie-card">
         <div class="movie_pic">
 
         <img class="movie-poster" src="${imageBaseUrl}/original/${image_path}" alt="${movie_details.title}" title="${movie_details.title}" id="${movie_details.id}"/>
@@ -79,8 +79,8 @@ function addQueryComponent(Main_page, movie_details){
 
         </div>
         <div class="rating_name">
-            <p><i class="fa-solid fa-star"></i>${movie_details.vote_average}</p>
-            <p>${movie_details.title}</p>
+            <p id="movie-votes"><i class="fa-solid fa-star"></i>${movie_details.vote_average}</p>
+            <p id="movie-title">${movie_details.title}</p>
 
         </div>
 
@@ -102,7 +102,7 @@ main_body.addEventListener('click', function (e) {
 
 // })
 
-document.getElementById("no_display_mid_screen_btn").addEventListener('click', (event) => {
+document.getElementById("close-search-btn").addEventListener('click', (event) => {
     toggle_display_movie_details.style.display = "none"
 })
 
@@ -136,13 +136,13 @@ function updateDisplayMovieDetail(movie_details){
 
             <div class="details_div">
             
-                <h1 class="no_padding_margin">${movie_details.title}</h1>
+                <h1 class="no_padding_margin" id="movie-title">${movie_details.title}</h1>
                 <div class="movie_side_side_details">
                     <h4 class="inline_movie_details no_padding_margin">${movie_details.runtime} min</h4>
                     <h4 class="inline_movie_details details_padding_right no_padding_margin"> ${movie_details.release_date}</h4>
                     
                     <h4 class="inline_movie_details details_padding_right no_padding_margin"> ${genre_string()} </h4>
-                    <h4 class="inline_movie_details details_padding_right no_padding_margin"><i class="fa-solid fa-star"></i> ${movie_details.vote_average}</h4>
+                    <h4 class="inline_movie_details details_padding_right no_padding_margin" id="movie-votes"><i class="fa-solid fa-star"></i> ${movie_details.vote_average}</h4>
 
                 </div>
                 <p>

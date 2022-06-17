@@ -33,7 +33,7 @@ nav{
     text-align: center;
 }
 
-.flixter_movie_card{
+.movie-card{
     width: 20%;
     min-height: 150px;
     padding-top: 30px;
@@ -60,7 +60,7 @@ nav{
 
 
 
-div.flixter_movie_card:hover {
+div.movie-card:hover {
     transform: scale(1.05);
     cursor: pointer;
 }
@@ -79,7 +79,7 @@ div.flixter_movie_card:hover {
 
 }
 
-#no_display_mid_screen_btn{
+#close-search-btn{
     display: block; 
     position: absolute;
     top: 5%;
@@ -89,7 +89,7 @@ div.flixter_movie_card:hover {
     text-align: center;
 }
 
-#no_display_mid_screen_btn:hover{
+#close-search-btn:hover{
     background-color: black;
 }
 
@@ -262,7 +262,7 @@ form {
 }
 
 @media only screen and (max-width: 1024px){
-    .flixter_movie_card {
+    .movie-card {
         width: 30%;
     }
 
@@ -278,7 +278,7 @@ form {
 
 
 @media only screen and (max-width: 768px) {
-    .flixter_movie_card {
+    .movie-card {
         width: 40%;
     }
 
@@ -294,7 +294,7 @@ form {
 }
 
 @media only screen and (max-width: 480px) {
-    .flixter_movie_card{
+    .movie-card{
         width: 100%;
         padding-top: 0;
         margin-top: 10px;
