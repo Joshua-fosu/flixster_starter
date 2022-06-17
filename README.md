@@ -39,8 +39,7 @@ Deployed Application (optional): [Flixster Deployed Site](https://joshua-fosu.gi
 - [ ] Implement anything else that you can get done to improve the app functionality!
 
 ### Walkthrough Video
-
-![Flixter gif](https://streamable.com/4z99ni)
+![Flixter gif](../Desktop/Screen%20Recording%202022-06-17%20at%203.52.28%20PM.gif)
 
 ### Reflection
 
