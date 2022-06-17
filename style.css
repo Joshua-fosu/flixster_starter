@@ -283,8 +283,13 @@ form {
 @media only screen and (max-width: 480px) {
     .flixter_movie_card{
         width: 100%;
+        padding-top: 0;
+        margin-top: 10px;
     }
 
+    .movie_pic {
+        max-width: 100%;
+    }
     .movie-poster{
         max-width: 100%;
     }
