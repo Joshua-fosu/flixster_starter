@@ -39,8 +39,8 @@ Deployed Application (optional): [Flixster Deployed Site](https://joshua-fosu.gi
 - [x] Implement anything else that you can get done to improve the app functionality!
 
 ### Walkthrough Video
-![Flixter gif](../Desktop/Screen%20Recording%202022-06-17%20at%203.52.28%20PM.gif)
 
+![Demo](../Downloads/screen-recording-2022-06-19-at-15553-pm_ZORLPeVu.gif)
 ### Reflection
 
 * Did the topics discussed in your labs prepare you to complete the assignment? Be specific, which features in your weekly assignment did you feel unprepared to complete?
