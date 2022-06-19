@@ -10,15 +10,16 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Joan&display=swap" rel="stylesheet">
-    <link rel="icon" type="image/png" href="favicon.ico"/>
-    
+    <link rel="icon" type="image/png" href="favicon.ico" />
+
 </head>
 
 <body id="entire_page">
     <nav>
         <h1 id="flixter_head">
             <!-- <img src="https://www.iconpacks.net/icons/1/free-movie-icon-850-thumb.png" id="flixter_icon" alt="flixter icon" srcset=""> -->
-            Flixter</h1>
+            Flixter
+        </h1>
         <div class="center_search_bar">
             <form role="search" id="form">
                 <input type="search" id="search-input" name="q" placeholder="Search for movies..."
@@ -32,11 +33,20 @@
                 </button>
             </form>
         </div>
+        <!-- Rounded switch -->
+        <div style="margin-top: 5px; display:flex; justify-content: center; align-items: baseline; align-self: baseline;">
+            <label class="switch" style="align-self: baseline;">
+                <input type="checkbox">
+                <span class="slider round"></span>
+            </label>
+            <span style="margin-left: 5px; align-self: baseline;" >Endless Scrolling</span>
+        </div>
+        
 
     </nav>
     <section id="movies-grid">
 
-    
+
     </section>
 
     <section id="no_display_mid_screen">

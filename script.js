@@ -4,8 +4,7 @@ const imageBaseUrl = 'https://image.tmdb.org/t/p'
 const baseRequest = "https://api.themoviedb.org/3/movie/550?api_key=e31d3ef41e690c0589dc357561e14fe0&language=en-US"
 let currQuery = ""
 let currpage = 1
-
-
+var currL;
 // Example image tag
 // <img class="movie-poster" src="${imageBaseUrl}/w342${movie.posterPath}" alt="${movie.title}" title="${movie.title}"/>
 
@@ -18,8 +17,10 @@ const toggle_display_movie_details = document.getElementById("no_display_mid_scr
 const movie_display_detail = document.getElementById("movie_details")
 const search_bar = document.getElementById("search-input")
 const form_selector = document.getElementById("form")
+const endless_scrolling_switch = document.querySelector(".switch")
 const load_more_selector = ""
-var endless_scrolling  = true
+var endless_scrolling  = false;
+var is_submitted = false;
 
 
 
@@ -32,6 +33,7 @@ form_selector.addEventListener('submit', submitted);
 async function submitted(event) {
     event.preventDefault();
     main_page.innerHTML += ``
+    is_submitted = true
 }
 
 function addComponent(Main_Page, movie_details) {
@@ -39,7 +41,11 @@ function addComponent(Main_Page, movie_details) {
     image_path = movie_details.poster_path?movie_details.poster_path: movie_details.backdrop_path
     Main_Page.innerHTML +=
         `
-    <div class="movie-card">
+    <div class="movie-card" id="${movie_details.id}">
+
+        <div class="on_hover_trailer">
+
+        </div>
         <div class="movie_pic">
 
         <img class="movie-poster" src="${imageBaseUrl}/original/${image_path}" alt="${movie_details.title}" title="${movie_details.title}" id="${movie_details.id}"/>
@@ -71,10 +77,10 @@ function addQueryComponent(Main_page, movie_details){
     image_path = movie_details.poster_path?movie_details.poster_path: movie_details.backdrop_path
     Main_page.innerHTML =
         `
-    <div class="movie-card">
+    <div class="movie-card"  id="${movie_details.id}">
         <div class="movie_pic">
 
-        <img class="movie-poster" src="${imageBaseUrl}/original/${image_path}" alt="${movie_details.title}" title="${movie_details.title}" id="${movie_details.id}"/>
+        <img class="movie-poster" src="${imageBaseUrl}/original/${image_path}" alt="${movie_details.title}" title="${movie_details.title}"  hover='addLoadMoreButton();'/>
 
 
         </div>
@@ -92,15 +98,56 @@ function addQueryComponent(Main_page, movie_details){
 
 main_body.addEventListener('click', function (e) {
     // But only alert for elements that have an alert-button class
-    if (e.target.classList.contains("movie-poster")) {
-        displayIndividualMovieDetails(e.target.id)
+    if (e.target.classList.contains("rating_name")) {
+        displayIndividualMovieDetails(e.target.parentElement.id)
     }
 });
+
+
+async function playTrailer(movie_id){
+    const response = await fetch("https://api.themoviedb.org/3/movie/"+ movie_id +"?api_key=e31d3ef41e690c0589dc357561e14fe0&language=en-US&append_to_response=videos,images")
+    const response_json = await response.json()
+    let video_path = await "https://www.youtube.com/embed/" + response_json.videos.results[0].key +"?controls=0&autoplay=1&mute=1&cc_lang_pref=en&cc_load_policy=1"
+    return video_path
+
+}
+
+
+
+main_body.addEventListener('mouseover', async (event)=>{
+    if (event.target.classList.contains("movie-poster")  && (window.innerWidth >= 1000)){
+        youtube_key = await playTrailer(event.target.id);
+        currL = event.target.parentElement.innerHTML
+        event.target.parentElement.innerHTML =  `
+        <iframe
+            src=${youtube_key}
+            width="100%" height="100%"
+            modestbranding="1" 
+            frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+            class="youtube_embed"
+            >
+            </iframe>
+        
+        
+        `
+    }
+})
+
+main_body.addEventListener('mouseout', (event) => {
+    if (event.target.parentElement.classList.contains("movie_pic") && (window.innerWidth >= 1000)){
+        event.target.parentElement.innerHTML = currL
+    }
+
+})
 
 
 // flix_individual_movie.addEventListener("click", function() {
 
 // })
+
+
+
+
 
 document.getElementById("close-search-btn").addEventListener('click', (event) => {
     toggle_display_movie_details.style.display = "none"
@@ -176,7 +223,7 @@ async function displayIndividualMovieDetails(movie_id) {
 }
 
 async function runOngoingSearch() {
-    endless_scrolling = false
+    // endless_scrolling = false
     const response = await fetch("https://api.themoviedb.org/3/search/movie?api_key="+ api_key+"&language=en-US&page=1&include_adult=false&query=" + currQuery)
     const response_json = await response.json()
     user_movies = response_json.results
@@ -187,21 +234,15 @@ async function runOngoingSearch() {
 }
 
 
-// window.onscroll = function (ev) {
-//     if ( ( (window.innerHeight + window.scrollY) >= (document.body.offsetHeight) )  && (endless_scrolling)) {
-//         currpage += 1
-//         getTrendingMovies()
-//     }
-// };
+window.onscroll = function (ev) {
+    if ( ( (window.innerHeight + window.scrollY) >= (document.body.offsetHeight) )  && (endless_scrolling == true) && (is_submitted == false)) {
+        currpage += 1
+        getTrendingMovies()
+    }
+};
 
-
-// load_more_selector.addEventListener('click', (event) => {
-//     currpage += 1
-//     getTrendingMovies()
-// })
 
 function load_more_movies() {
-    console.log("came, here")
     currpage += 1
     getTrendingMovies()
 }
@@ -211,12 +252,22 @@ search_bar.addEventListener('input', (event)=> {
     if (currQuery == ""){
         main_page.innerHTML = ``
         currpage = 1
+        is_submitted = false
         getTrendingMovies()
     }else{
-        
-    runOngoingSearch()
+        runOngoingSearch()
     }
     
+})
+
+
+endless_scrolling_switch.addEventListener('mouseup', function (event) {
+    console.log(endless_scrolling)
+    if (endless_scrolling == true){
+        endless_scrolling = false
+    }else{
+        endless_scrolling = true
+    }
 })
 
 window.onload = () => {
